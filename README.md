@@ -1,4 +1,4 @@
-# Mithril.js TodoMVC
+# TodoMVC Mithril.js
 
 This is a [Mithril.js](https://mithril.js.org/) version of [TodoMVC](http://todomvc.com/) written in [CoffeeScript](http://coffeescript.org/) and built with [Brunch](http://brunch.io).
 
