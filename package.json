@@ -1,0 +1,32 @@
+{
+  "name": "todomvc",
+  "description": "todomvc",
+  "author": "Reuben Cummings",
+  "version": "0.0.5",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "<your_repo?>"
+  },
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production",
+    "postinstall": "brunch build"
+  },
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "lodash": "^4.7.0",
+    "todomvc-common": "^1.0.1",
+    "todomvc-app-css": "^1.0.1",
+    "mithril": "^0.2.5"
+  },
+  "devDependencies": {
+    "brunch": "^2.9.1",
+    "css-brunch": "^2.6.1",
+    "clean-css-brunch": "^2.0.0",
+    "auto-reload-brunch": "^2.0.0",
+    "coffee-script-brunch": "^2.0.0",
+    "coffeelint-brunch": "^2.0.0",
+    "uglify-js-brunch": "^2.0.0"
+  }
+}
