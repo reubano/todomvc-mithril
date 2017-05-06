@@ -1,28 +1,27 @@
 m = require 'mithril'
 
-module.exports = (ctrl) ->
-  amountCompleted = ctrl.amountCompleted()
-  amountActive = ctrl.todos.list.length - amountCompleted
-  es = if amountActive is 1 then '' else 's'
-  actClass = if ctrl.filter() is 'active' then 'selected' else ''
-  cmpClass = if ctrl.filter() is 'completed' then 'selected' else ''
-  blankClass = if ctrl.filter() is '' then 'selected' else ''
+module.exports = (vnode) ->
+  ctrl = vnode.state.ctrl
+  es = if ctrl.remaining() is 1 then '' else 's'
+  actClass = if ctrl.status() is 'active' then 'selected' else ''
+  cmpClass = if ctrl.status() is 'completed' then 'selected' else ''
+  blankClass = if ctrl.status() is '' then 'selected' else ''
 
-  m 'footer#footer', [
-    m 'span#todo-count', [m('strong', amountActive), " item#{es} left"]
-    m 'ul#filters', [
+  m 'footer.footer', [
+    m 'span.todo-count', [m('strong', ctrl.remaining()), " item#{es} left"]
+    m 'ul.filters', [
       m 'li', [
-        m 'a[href=/]', {config: m.route, class: blankClass}, 'All']
+        m 'a[href=/]', {oncreate: m.route.link, class: blankClass}, 'All']
       m 'li', [
-        m 'a[href=/active]', {config: m.route, class: actClass}, 'Active']
+        m 'a[href=/active]', {
+          oncreate: m.route.link, class: actClass}, 'Active']
       m 'li', [
-        m 'a[href=/completed]', {config: m.route, class: cmpClass}, 'Completed']
+        m 'a[href=/completed]', {
+          oncreate: m.route.link, class: cmpClass}, 'Completed']
     ]
 
-    if amountCompleted is 0
-      ''
-    else
-      m 'button#clear-completed',
+    if ctrl.completed()
+      m 'button.clear-completed',
         onclick: ctrl.clearCompleted,
         'Clear completed'
   ]

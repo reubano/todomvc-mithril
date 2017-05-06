@@ -1,4 +1,4 @@
-m = require 'mithril'
+prop = require 'mithril/stream'
 count = 0
 
 uniqueId = ->
@@ -7,9 +7,9 @@ uniqueId = ->
 
 module.exports = class Todo
   constructor: (data) ->
-    @title = m.prop data.title or ''
-    @completed = m.prop data.completed or false
-    @editing = m.prop data.editing or false
-    @id = m.prop data.id or uniqueId()
+    @title = prop data.title.trim() or ''
+    @completed = prop data.completed or false
+    @editing = prop data.editing or false
+    @id = prop data.id or uniqueId()
 
   isEmpty: => not @title()

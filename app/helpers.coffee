@@ -6,12 +6,12 @@ module.exports =
     (e) ->
       if e.keyCode is config.ENTER_KEY
         onenter()
-        m.redraw.strategy('diff')
+        e.redraw = true
       else if e.keyCode is config.ESC_KEY
         onescape()
-        m.redraw.strategy('diff')
+        e.redraw = true
       else
-        m.redraw.strategy('none')
+        e.redraw = false
   store: (data) ->
     if data
       localStorage.setItem config.STORAGE_ID, JSON.stringify(data)
