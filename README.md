@@ -8,3 +8,7 @@ This is a [Mithril.js](https://mithril.js.org/) version of [TodoMVC](http://todo
 - Install Brunch `npm install -g brunch`
 - Install dependencies `npm install`
 - Run dev server and watch files for changes `brunch watch --server`
+
+## See also
+
+[Official version](https://github.com/MithrilJS/mithril.js/tree/next/examples/todomvc)
