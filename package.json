@@ -1,12 +1,21 @@
 {
-  "name": "todomvc",
-  "description": "todomvc",
+  "name": "todomvc-mithril",
+  "description": "TodoMVC using Mithril.js with CoffeeScript and Brunch",
   "author": "Reuben Cummings",
   "version": "0.0.5",
-  "license": "MIT",
+  "keywords": [
+    "freelancers",
+    "developers",
+    "designers"
+  ],
   "repository": {
     "type": "git",
-    "url": "<your_repo?>"
+    "url": "https://github.com/reubano/todomvc-mithril"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "6.10.x",
+    "npm": "3.10.x"
   },
   "scripts": {
     "start": "brunch watch --server",
@@ -14,19 +23,19 @@
     "postinstall": "brunch build"
   },
   "dependencies": {
-    "coffee-script": "^1.10.0",
-    "lodash": "^4.7.0",
-    "todomvc-common": "^1.0.1",
-    "todomvc-app-css": "^1.0.1",
-    "mithril": "^0.2.5"
+    "brunch": "^2.9.1",
+    "coffee-script": "^1.12.5",
+    "lodash": "^4.17.4",
+    "mithril": "^1.1.1",
+    "todomvc-app-css": "^2.1.0",
+    "todomvc-common": "^1.0.3"
   },
   "devDependencies": {
-    "brunch": "^2.9.1",
-    "css-brunch": "^2.6.1",
-    "clean-css-brunch": "^2.0.0",
     "auto-reload-brunch": "^2.0.0",
+    "clean-css-brunch": "^2.0.0",
     "coffee-script-brunch": "^2.0.0",
     "coffeelint-brunch": "^2.0.0",
+    "css-brunch": "^2.6.1",
     "uglify-js-brunch": "^2.0.0"
   }
 }

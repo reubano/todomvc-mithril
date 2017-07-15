@@ -1,5 +1,5 @@
 exports.config =
-  # See http://brunch.io/#documentation for docs.
+  # See http://brunch.io/docs/config for docs.
   plugins:
     coffeelint:
       pattern: /^app\/.*\.coffee$/
@@ -13,6 +13,10 @@ exports.config =
     uglify:
       mangle: true
 
+  npm:
+    styles:
+      'todomvc-app-css': ['index.css']
+
   files:
     javascripts:
       joinTo:
@@ -22,6 +26,6 @@ exports.config =
     stylesheets:
       joinTo:
         'stylesheets/app.css': /^app/
-        'stylesheets/vendor.css': /^vendor/
+        'stylesheets/vendor.css': /^node_modules/
 
   sourceMaps: 'absoluteUrl'

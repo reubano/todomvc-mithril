@@ -1,15 +1,17 @@
-m = require 'mithril'
+prop = require 'mithril/stream'
 helpers = require 'helpers'
-Todo = require './model'
-Todos = require './collection'
+Todo = require 'models/model'
+Todos = require 'models/collection'
 _ = require 'lodash'
 
-module.exports = class ViewModel
-  constructor: () ->
-    @filter = m.prop m.route.param('filter') or ''
-    @title = m.prop ''
+module.exports = class Controller
+  constructor: (attrs) ->
+    @status = prop attrs.status
+    @title = prop ''
+    @todos = new Todos()
 
-  todos: if @todos? then @todos else new Todos()
+  update: (attrs) -> @status attrs.status
+
   isEmpty: => not @title()
   data: => title: @title()
   resetData: => @title ''
@@ -23,14 +25,8 @@ module.exports = class ViewModel
       @resetData()
 
   remove: (todo, pred) =>
-    if todo?.id
-      @todos.list.splice todo.id, 1
-      ids = [todo.id]
-    else if pred
-      filtered = _.filter @todos.list, pred
-      ids = _.map filtered, 'id'
-      _.remove @todos.list, pred
-
+    pred = pred or (_todo) -> _todo.id is todo.id
+    _.remove @todos.list, pred
     @todos.save()
 
   edit: (todo) ->
@@ -38,7 +34,7 @@ module.exports = class ViewModel
     todo.editing true
 
   isVisible: (todo) =>
-    switch @filter()
+    switch @status()
       when 'active' then not todo.completed()
       when 'completed' then todo.completed()
       else true
@@ -47,7 +43,7 @@ module.exports = class ViewModel
     todo.completed not todo.completed()
     @todos.save()
 
-  doneEditing: (todo, index) =>
+  save: (todo, index) =>
     if todo.editing()
       todo.editing false
 
@@ -56,7 +52,7 @@ module.exports = class ViewModel
       else if @hasChanged todo
         @todos.save()
 
-  cancelEditing: (todo) ->
+  reset: (todo) ->
     todo.title todo.previousTitle
     todo.editing false
 
@@ -64,8 +60,12 @@ module.exports = class ViewModel
 
   clearCompleted: => @remove null, (todo) -> todo.completed()
 
-  amountCompleted: =>
+  completed: =>
     counted = _.countBy @todos.list, (todo) -> todo.completed()
+    counted.true or 0
+
+  remaining: =>
+    counted = _.countBy @todos.list, (todo) -> not todo.completed()
     counted.true or 0
 
   allCompleted: => _.every @todos.list, (todo) -> todo.completed()
@@ -77,3 +77,7 @@ module.exports = class ViewModel
       if todo.completed() isnt completed
         todo.completed completed
         @todos.save()
+
+  focus: (vnode, todo) ->
+    if todo.editing() and vnode.dom isnt document.activeElement
+      vnode.dom.focus()

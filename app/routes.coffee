@@ -1,3 +1,7 @@
+m = require 'mithril'
+
 module.exports = (app) ->
-  '/': app
-  '/:filter': app
+  '/': render: (vnode) -> m app, vnode.attrs
+  '/:status': render: (vnode) -> m app, vnode.attrs
+  # '/': app
+  # '/:status': app

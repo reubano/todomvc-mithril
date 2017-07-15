@@ -1,7 +1,13 @@
-# controller = require 'controller'
+m = require 'mithril'
+Controller = require 'controllers/site-controller'
 view = require 'views/main-view'
-ViewModel = require 'models/view-model'
 
 module.exports = class Component
-  controller: -> new ViewModel()
+  oninit: (vnode) ->
+    vnode.state.ctrl = new Controller vnode.attrs
+    vnode.state.ctrl.todos.fetch().then m.redraw
+
+  onbeforeupdate: (vnode) ->
+    vnode.state.ctrl.update vnode.attrs
+
   view: view
