@@ -1,13 +1,18 @@
 {
-  "name": "TodoMVC Mithril.js",
+  "name": "todomvc-mithril",
   "description": "TodoMVC using Mithril.js with CoffeeScript and Brunch",
   "author": "Reuben Cummings",
   "version": "0.0.5",
-  "license": "MIT",
+  "keywords": [
+    "freelancers",
+    "developers",
+    "designers"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/reubano/todomvc-mithril"
   },
+  "license": "MIT",
   "engines": {
     "node": "6.10.x",
     "npm": "3.10.x"
