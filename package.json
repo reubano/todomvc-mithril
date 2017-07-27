@@ -25,7 +25,6 @@
   "dependencies": {
     "brunch": "^2.9.1",
     "coffee-script": "^1.12.5",
-    "lodash": "^4.17.4",
     "mithril": "^1.1.1",
     "todomvc-app-css": "^2.1.0",
     "todomvc-common": "^1.0.3"

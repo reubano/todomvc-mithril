@@ -12,5 +12,5 @@ module.exports = class Todos
 
     promise
 
-  get: (id) => _.find @list, {id}
+  get: (id) => @list.find {id}
   save: => helpers.store @list

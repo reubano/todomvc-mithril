@@ -2,7 +2,12 @@ prop = require 'mithril/stream'
 helpers = require 'helpers'
 Todo = require 'models/model'
 Todos = require 'models/collection'
-_ = require 'lodash'
+
+filter = (array, predicate, reverse) ->
+  if reverse
+    (value for value in array when not predicate value)
+  else
+    (value for value in array when predicate value)
 
 module.exports = class Controller
   constructor: (attrs) ->
@@ -25,8 +30,8 @@ module.exports = class Controller
       @resetData()
 
   remove: (todo, pred) =>
-    pred = pred or (_todo) -> _todo.id is todo.id
-    _.remove @todos.list, pred
+    pred = pred or (_todo) -> _todo?.id is todo.id
+    @todos.list = filter @todos.list, pred, true
     @todos.save()
 
   edit: (todo) ->
@@ -61,14 +66,14 @@ module.exports = class Controller
   clearCompleted: => @remove null, (todo) -> todo.completed()
 
   completed: =>
-    counted = _.countBy @todos.list, (todo) -> todo.completed()
-    counted.true or 0
+    filtered = filter @todos.list, (todo) -> todo?.completed()
+    filtered.length
 
   remaining: =>
-    counted = _.countBy @todos.list, (todo) -> not todo.completed()
-    counted.true or 0
+    filtered = filter @todos.list, (todo) -> todo and not todo.completed()
+    filtered.length
 
-  allCompleted: => _.every @todos.list, (todo) -> todo.completed()
+  allCompleted: => @todos.list.every (todo) -> todo.completed()
 
   completeAll: =>
     completed = not @allCompleted()
