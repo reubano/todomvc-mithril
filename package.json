@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "6.10.x",
+    "node": "6.11.x",
     "npm": "3.10.x"
   },
   "scripts": {
@@ -23,9 +23,7 @@
     "postinstall": "brunch build"
   },
   "dependencies": {
-    "brunch": "^2.9.1",
     "coffee-script": "^1.12.5",
-    "lodash": "^4.17.4",
     "mithril": "^1.1.1",
     "todomvc-app-css": "^2.1.0",
     "todomvc-common": "^1.0.3"
