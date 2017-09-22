@@ -4,8 +4,8 @@ This is a [Mithril.js](https://mithril.js.org/) version of [TodoMVC](http://todo
 
 ## Usage
 
-- Install [node](https://nodejs.org/en/) `brew install node` or `apt-get install nodejs npm`
-- Install pnpm `npm install -g pnpm@1.8.1 brunch@2.10.9`
+- Install [node v6.11](https://nodejs.org/en/) `brew install node` or `apt-get install nodejs npm`
+- Install pnpm and brunch `npm install -g pnpm@1.8.1 brunch@2.10.9`
 - Install dependencies `pnpm install`
 - Run dev server and watch files for changes `brunch watch --server`
 
