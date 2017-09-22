@@ -18,14 +18,14 @@ module.exports = (vnode) ->
 
     m 'section#main',
       style: display: if ctrl.todos.list.length then '' else 'none'
-      [
-        m 'input.toggle-all[type=checkbox]',
-          onclick: ctrl.completeAll
-          checked: ctrl.allCompleted()
+    [
+      m 'input.toggle-all[type=checkbox]',
+        onclick: ctrl.completeAll
+        checked: ctrl.allCompleted()
 
-        m "label[for='toggle-all']", {onclick: ctrl.completeAll}, toggleLabel
-        todosView vnode
-      ]
+      m "label[for='toggle-all']", {onclick: ctrl.completeAll}, toggleLabel
+      todosView vnode
+    ]
 
     if ctrl.todos.list.length
       footerView vnode
