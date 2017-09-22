@@ -3,12 +3,6 @@ helpers = require 'helpers'
 Todo = require 'models/model'
 Todos = require 'models/collection'
 
-filter = (array, predicate, reverse) ->
-  if reverse
-    (value for value in array when not predicate value)
-  else
-    (value for value in array when predicate value)
-
 module.exports = class Controller
   constructor: (attrs) ->
     @status = prop attrs.status
@@ -20,22 +14,24 @@ module.exports = class Controller
   isEmpty: => not @title()
   data: => title: @title()
   resetData: => @title ''
-  hasChanged: (todo) -> todo.title() isnt todo.previousTitle
+  hasChanged: (todo) ->
+    changedTitle = todo.title() isnt todo.previousTitle
+    changedCompleted = todo.completed() isnt todo.previousCompleted
+    changedTitle or changedCompleted
 
   add: =>
     unless @isEmpty()
-      todo = new Todo @data()
-      @todos.list.push todo
-      @todos.save()
+      @todos.add @data()
       @resetData()
 
   remove: (todo, pred) =>
-    pred = pred or (_todo) -> _todo?.id is todo.id
-    @todos.list = filter @todos.list, pred, true
-    @todos.save()
+    pred = pred or (_todo) -> _todo.id() is todo.id()
+    ids = (_todo.id() for _todo in helpers.filter @todos.list, pred)
+    @todos.delete ids
 
   edit: (todo) ->
     todo.previousTitle = todo.title()
+    todo.previousCompleted = todo.completed()
     todo.editing true
 
   isVisible: (todo) =>
@@ -45,17 +41,18 @@ module.exports = class Controller
       else true
 
   toggle: (todo) ->
+    todo.previousCompleted = todo.completed()
     todo.completed not todo.completed()
-    @todos.save()
+    @save todo
 
-  save: (todo, index) =>
+  save: (todo) =>
     if todo.editing()
       todo.editing false
 
-      if todo.isEmpty()
-        @remove todo
-      else if @hasChanged todo
-        @todos.save()
+    if todo.isEmpty()
+      @remove todo
+    else if @hasChanged todo
+      @todos.update todo
 
   reset: (todo) ->
     todo.title todo.previousTitle
@@ -66,11 +63,13 @@ module.exports = class Controller
   clearCompleted: => @remove null, (todo) -> todo?.completed()
 
   completed: =>
-    filtered = filter @todos.list, (todo) -> todo?.completed()
+    filtered = helpers.filter @todos.list, (todo) -> todo?.completed()
     filtered.length
 
   remaining: =>
-    filtered = filter @todos.list, (todo) -> todo and not todo.completed()
+    filtered = helpers.filter @todos.list, (todo) ->
+      todo and not todo.completed()
+
     filtered.length
 
   allCompleted: => @todos.list.every (todo) -> todo?.completed()
@@ -80,8 +79,7 @@ module.exports = class Controller
 
     for todo in @todos.list
       if todo.completed() isnt completed
-        todo.completed completed
-        @todos.save()
+        @toggle todo
 
   focus: (vnode, todo) ->
     if todo.editing() and vnode.dom isnt document.activeElement
