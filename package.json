@@ -2,7 +2,7 @@
   "name": "todomvc-mithril",
   "description": "TodoMVC using Mithril.js with CoffeeScript and Brunch",
   "author": "Reuben Cummings",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "keywords": [
     "freelancers",
     "developers",
