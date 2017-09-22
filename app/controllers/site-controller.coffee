@@ -15,7 +15,7 @@ module.exports = class Controller
     @title = prop ''
     @todos = new Todos()
 
-  update: (attrs) -> @status attrs.status
+  update: (attrs) => @status attrs.status
 
   isEmpty: => not @title()
   data: => title: @title()
