@@ -20,7 +20,10 @@ module.exports = class Controller
   isEmpty: => not @title()
   data: => title: @title()
   resetData: => @title ''
-  hasChanged: (todo) -> todo.title() isnt todo.previousTitle
+  hasChanged: (todo) ->
+    changedTitle = todo.title() isnt todo.previousTitle
+    changedCompleted = todo.completed() isnt todo.previousCompleted
+    changedTitle or changedCompleted
 
   add: =>
     unless @isEmpty()
@@ -36,6 +39,7 @@ module.exports = class Controller
 
   edit: (todo) ->
     todo.previousTitle = todo.title()
+    todo.previousCompleted = todo.completed()
     todo.editing true
 
   isVisible: (todo) =>
@@ -45,6 +49,7 @@ module.exports = class Controller
       else true
 
   toggle: (todo) ->
+    todo.previousCompleted = todo.completed()
     todo.completed not todo.completed()
     @todos.save()
 
