@@ -21,15 +21,13 @@ module.exports = class Controller
 
   add: =>
     unless @isEmpty()
-      todo = new Todo @data()
-      @todos.list.push todo
-      @todos.save()
+      @todos.add @data()
       @resetData()
 
   remove: (todo, pred) =>
     pred = pred or (_todo) -> _todo.id() is todo.id()
-    @todos.list = filter @todos.list, pred, true
-    @todos.save()
+    ids = (_todo.id() for _todo in helpers.filter @todos.list, pred)
+    @todos.delete ids
 
   edit: (todo) ->
     todo.previousTitle = todo.title()
@@ -45,16 +43,16 @@ module.exports = class Controller
   toggle: (todo) ->
     todo.previousCompleted = todo.completed()
     todo.completed not todo.completed()
-    @todos.save()
+    @save todo
 
   save: (todo) =>
     if todo.editing()
       todo.editing false
 
-      if todo.isEmpty()
-        @remove todo
-      else if @hasChanged todo
-        @todos.save()
+    if todo.isEmpty()
+      @remove todo
+    else if @hasChanged todo
+      @todos.update todo
 
   reset: (todo) ->
     todo.title todo.previousTitle

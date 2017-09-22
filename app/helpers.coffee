@@ -22,3 +22,6 @@ module.exports =
       (value for value in array when not predicate value)
     else
       (value for value in array when predicate value)
+  assert: (assertion, msg) ->
+    console.assert assertion, msg or ''
+
