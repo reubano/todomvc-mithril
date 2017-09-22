@@ -7,7 +7,7 @@ module.exports = class Todos
   list: []
   fetch: ->
     m.request {method: 'GET', url: config.api}
-      .then (response) => @list = (new Todo todo for todo in response.objects)
+      .then (response) => @list = response.objects.map (todo) -> new Todo todo
       .catch (e) -> console.error e.message
 
   add: (data) =>
@@ -18,7 +18,7 @@ module.exports = class Todos
   delete: (ids) =>
     @list = helpers.filter @list, (todo) -> todo.id() not in ids
 
-    for id in ids
+    ids.forEach (id) ->
       m.request method: 'DELETE', url: "#{config.api}/#{id}"
 
   update: (todo, data) -> m.request
