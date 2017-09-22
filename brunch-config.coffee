@@ -29,3 +29,4 @@ exports.config =
         'stylesheets/vendor.css': /^node_modules/
 
   sourceMaps: 'absoluteUrl'
+  notifications: false

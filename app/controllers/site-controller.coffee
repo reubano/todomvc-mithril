@@ -15,7 +15,7 @@ module.exports = class Controller
     @title = prop ''
     @todos = new Todos()
 
-  update: (attrs) -> @status attrs.status
+  update: (attrs) => @status attrs.status
 
   isEmpty: => not @title()
   data: => title: @title()
@@ -63,7 +63,7 @@ module.exports = class Controller
 
   clearTitle: => @title ''
 
-  clearCompleted: => @remove null, (todo) -> todo.completed()
+  clearCompleted: => @remove null, (todo) -> todo?.completed()
 
   completed: =>
     filtered = filter @todos.list, (todo) -> todo?.completed()
@@ -73,7 +73,7 @@ module.exports = class Controller
     filtered = filter @todos.list, (todo) -> todo and not todo.completed()
     filtered.length
 
-  allCompleted: => @todos.list.every (todo) -> todo.completed()
+  allCompleted: => @todos.list.every (todo) -> todo?.completed()
 
   completeAll: =>
     completed = not @allCompleted()
