@@ -30,7 +30,7 @@ module.exports = class Controller
       @resetData()
 
   remove: (todo, pred) =>
-    pred = pred or (_todo) -> _todo?.id is todo.id
+    pred = pred or (_todo) -> _todo.id() is todo.id()
     @todos.list = filter @todos.list, pred, true
     @todos.save()
 
