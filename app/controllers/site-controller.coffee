@@ -3,12 +3,6 @@ helpers = require 'helpers'
 Todo = require 'models/model'
 Todos = require 'models/collection'
 
-filter = (array, predicate, reverse) ->
-  if reverse
-    (value for value in array when not predicate value)
-  else
-    (value for value in array when predicate value)
-
 module.exports = class Controller
   constructor: (attrs) ->
     @status = prop attrs.status
@@ -53,7 +47,7 @@ module.exports = class Controller
     todo.completed not todo.completed()
     @todos.save()
 
-  save: (todo, index) =>
+  save: (todo) =>
     if todo.editing()
       todo.editing false
 
@@ -71,11 +65,13 @@ module.exports = class Controller
   clearCompleted: => @remove null, (todo) -> todo?.completed()
 
   completed: =>
-    filtered = filter @todos.list, (todo) -> todo?.completed()
+    filtered = helpers.filter @todos.list, (todo) -> todo?.completed()
     filtered.length
 
   remaining: =>
-    filtered = filter @todos.list, (todo) -> todo and not todo.completed()
+    filtered = helpers.filter @todos.list, (todo) ->
+      todo and not todo.completed()
+
     filtered.length
 
   allCompleted: => @todos.list.every (todo) -> todo?.completed()
@@ -85,8 +81,7 @@ module.exports = class Controller
 
     for todo in @todos.list
       if todo.completed() isnt completed
-        todo.completed completed
-        @todos.save()
+        @toggle todo
 
   focus: (vnode, todo) ->
     if todo.editing() and vnode.dom isnt document.activeElement
