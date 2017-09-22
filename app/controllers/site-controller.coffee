@@ -13,7 +13,6 @@ module.exports = class Controller
 
   isEmpty: => not @title()
   data: => title: @title()
-  resetData: => @title ''
   hasChanged: (todo) ->
     changedTitle = todo.title() isnt todo.previousTitle
     changedCompleted = todo.completed() isnt todo.previousCompleted
@@ -24,7 +23,7 @@ module.exports = class Controller
       todo = new Todo @data()
       @todos.list.push todo
       @todos.save()
-      @resetData()
+      @clearTitle()
 
   remove: (todo, pred) =>
     pred = pred or (_todo) -> _todo.id() is todo.id()
@@ -79,7 +78,7 @@ module.exports = class Controller
   completeAll: =>
     completed = not @allCompleted()
 
-    for todo in @todos.list
+    @todos.list.forEach (todo) =>
       if todo.completed() isnt completed
         @toggle todo
 
