@@ -11,7 +11,7 @@ module.exports = (vnode) ->
       doneFunc = -> ctrl.save todo
       cancelFunc = -> ctrl.reset todo
 
-      m 'li', {class: "#{completed}#{editing}", key: todo.id()}, [
+      m 'li', {class: "#{completed}#{editing}", key: todo.id}, [
         m '.view', [
           m 'input.toggle[type=checkbox]',
             onclick: m.withAttr 'checked', -> ctrl.toggle todo

@@ -6,10 +6,10 @@ uniqueId = ->
   count
 
 module.exports = class Todo
-  constructor: (data) ->
-    @title = prop data.title.trim() or ''
-    @completed = prop data.completed or false
-    @editing = prop data.editing or false
-    @id = prop data.id or uniqueId()
+  constructor: (title) ->
+    @title = prop title.trim()
+    @completed = prop false
+    @editing = prop false
+    @id = uniqueId()
 
   isEmpty: => not @title()

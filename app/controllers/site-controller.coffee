@@ -11,27 +11,19 @@ module.exports = class Controller
   update: (attrs) => @status attrs.status
 
   isEmpty: => not @title()
-  data: => title: @title()
-  hasChanged: (todo) ->
-    changedTitle = todo.title() isnt todo.previousTitle
-    changedCompleted = todo.completed() isnt todo.previousCompleted
-    changedTitle or changedCompleted
 
   add: =>
     unless @isEmpty()
-      todo = new Todo @data()
+      todo = new Todo @title()
       @todos.list.push todo
-      @todos.save()
       @clearTitle()
 
   remove: (todo, pred) =>
     pred = pred or (_todo) -> _todo.id isnt todo.id
     @todos.list = @todos.list.filter pred
-    @todos.save()
 
   edit: (todo) ->
     todo.previousTitle = todo.title()
-    todo.previousCompleted = todo.completed()
     todo.editing true
 
   isVisible: (todo) =>
@@ -41,9 +33,7 @@ module.exports = class Controller
       else true
 
   toggle: (todo) ->
-    todo.previousCompleted = todo.completed()
     todo.completed not todo.completed()
-    @todos.save()
 
   save: (todo) =>
     if todo.editing()
@@ -51,8 +41,6 @@ module.exports = class Controller
 
       if todo.isEmpty()
         @remove todo
-      else if @hasChanged todo
-        @todos.save()
 
   reset: (todo) ->
     todo.title todo.previousTitle
@@ -60,17 +48,17 @@ module.exports = class Controller
 
   clearTitle: => @title ''
 
-  clearCompleted: => @remove null, (todo) -> not todo?.completed()
+  clearCompleted: => @remove null, (todo) -> not todo.completed()
 
   completed: =>
-    filtered = @todos.list.filter (todo) -> todo?.completed()
+    filtered = @todos.list.filter (todo) -> todo.completed()
     filtered.length
 
   remaining: =>
-    filtered = @todos.list.filter (todo) -> not todo?.completed()
+    filtered = @todos.list.filter (todo) -> not todo.completed()
     filtered.length
 
-  allCompleted: => @todos.list.every (todo) -> todo?.completed()
+  allCompleted: => @todos.list.every (todo) -> todo.completed()
 
   completeAll: =>
     completed = not @allCompleted()
