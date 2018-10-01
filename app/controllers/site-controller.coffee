@@ -28,7 +28,7 @@ module.exports = class Controller
 
   remove: (todo, pred) =>
     pred = pred or (_todo) -> _todo.id() is todo.id()
-    @todos.list = filter @todos.list, pred, true
+    @todos.list = helpers.filter @todos.list, pred, true
     @todos.save()
 
   edit: (todo) ->
