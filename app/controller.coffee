@@ -6,7 +6,7 @@ module.exports = class Controller
     @status = prop attrs.status
     @title = prop ''
     @filterValue = prop ''
-    @todos = new Model.Todos()
+    @todos = new Model.Todos ['pizza', 'sausage']
 
   update: (attrs) => @status attrs.status
 
