@@ -8,5 +8,4 @@ module.exports = class Todos
     promise.then (result) => @list = result
     promise
 
-  get: (id) => @list.find {id}
   save: => helpers.store @list
