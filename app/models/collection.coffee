@@ -16,7 +16,7 @@ module.exports = class Todos
       .catch (e) -> console.error e.message
 
   delete: (ids) =>
-    @list = helpers.filter @list, (todo) -> todo.id() not in ids
+    @list = @list.filter (todo) -> todo.id() not in ids
 
     ids.forEach (id) ->
       m.request method: 'DELETE', url: "#{config.api}/#{id}"
