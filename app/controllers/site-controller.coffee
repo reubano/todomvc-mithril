@@ -1,5 +1,4 @@
 prop = require 'mithril/stream'
-helpers = require 'helpers'
 Todo = require 'models/model'
 Todos = require 'models/collection'
 
@@ -26,8 +25,8 @@ module.exports = class Controller
       @clearTitle()
 
   remove: (todo, pred) =>
-    pred = pred or (_todo) -> _todo.id() is todo.id()
-    @todos.list = helpers.filter @todos.list, pred, true
+    pred = pred or (_todo) -> _todo.id isnt todo.id
+    @todos.list = @todos.list.filter pred
     @todos.save()
 
   edit: (todo) ->
@@ -61,16 +60,14 @@ module.exports = class Controller
 
   clearTitle: => @title ''
 
-  clearCompleted: => @remove null, (todo) -> todo?.completed()
+  clearCompleted: => @remove null, (todo) -> not todo?.completed()
 
   completed: =>
-    filtered = helpers.filter @todos.list, (todo) -> todo?.completed()
+    filtered = @todos.list.filter (todo) -> todo?.completed()
     filtered.length
 
   remaining: =>
-    filtered = helpers.filter @todos.list, (todo) ->
-      todo and not todo.completed()
-
+    filtered = @todos.list.filter (todo) -> not todo?.completed()
     filtered.length
 
   allCompleted: => @todos.list.every (todo) -> todo?.completed()
