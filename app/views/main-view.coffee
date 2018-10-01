@@ -17,10 +17,10 @@ module.exports = (vnode) ->
       }
     ]
 
-    m 'section#main', {
+    m 'section.main', {
       style: display: if ctrl.todos.list.length then '' else 'none'
     }, [
-      m 'input.toggle-all[type=checkbox]', {
+      m 'input#toggle-all.toggle-all[type=checkbox]', {
         onclick: ctrl.completeAll
         checked: ctrl.allCompleted()
       }
