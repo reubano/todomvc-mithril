@@ -29,4 +29,3 @@ module.exports = (vnode) ->
           onupdate: (vnode) -> ctrl.focus vnode, todo
       ]
   ]
-
