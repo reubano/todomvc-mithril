@@ -5,6 +5,7 @@ module.exports = class Controller
   constructor: (attrs) ->
     @status = prop attrs.status
     @title = prop ''
+    @filterValue = prop ''
     @todos = new Model.Todos()
 
   update: (attrs) => @status attrs.status
@@ -16,6 +17,7 @@ module.exports = class Controller
       todo = new Model.Todo @title()
       @todos.list.push todo
       @clearTitle()
+      @clearFilter()
 
   remove: (todo, pred) =>
     pred = pred or (_todo) -> _todo.id isnt todo.id
@@ -26,10 +28,15 @@ module.exports = class Controller
     todo.editing true
 
   isVisible: (todo) =>
-    switch @status()
+    visible = switch @status()
       when 'active' then not todo.completed()
       when 'completed' then todo.completed()
       else true
+
+    if visible and @filterValue()
+      todo.title().includes @filterValue()
+    else
+      visible
 
   toggle: (todo) ->
     todo.completed not todo.completed()
@@ -46,6 +53,7 @@ module.exports = class Controller
     todo.editing false
 
   clearTitle: => @title ''
+  clearFilter: => @filterValue ''
 
   clearCompleted: => @remove null, (todo) -> not todo.completed()
 
