@@ -14,8 +14,8 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "6.11.x",
-    "npm": "3.10.x"
+    "node": "8.11.3",
+    "npm": "6.4.x"
   },
   "scripts": {
     "start": "brunch watch --server",
@@ -23,15 +23,15 @@
     "postinstall": "brunch build"
   },
   "dependencies": {
-    "coffee-script": "^1.12.5",
-    "mithril": "^1.1.1",
-    "todomvc-app-css": "^2.1.0",
-    "todomvc-common": "^1.0.3"
+    "brunch": "^2.10.17",
+    "coffeescript": "^2.3.2",
+    "mithril": "^1.1.6",
+    "todomvc-app-css": "^2.1.2"
   },
   "devDependencies": {
     "auto-reload-brunch": "^2.0.0",
     "clean-css-brunch": "^2.0.0",
-    "coffee-script-brunch": "^2.0.0",
+    "coffee-script-brunch": "^2.10.2",
     "coffeelint-brunch": "^2.0.0",
     "css-brunch": "^2.6.1",
     "uglify-js-brunch": "^2.0.0"
