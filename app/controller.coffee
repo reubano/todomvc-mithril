@@ -1,6 +1,5 @@
 prop = require 'mithril/stream'
-Todo = require 'models/model'
-Todos = require 'models/collection'
+Todos = require 'model'
 
 module.exports = class Controller
   constructor: (attrs) ->

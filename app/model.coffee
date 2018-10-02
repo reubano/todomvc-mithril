@@ -1,7 +1,18 @@
 m = require 'mithril'
-helpers = require 'helpers'
+prop = require 'mithril/stream'
 config = require 'config'
-Todo = require './model'
+
+assert = (assertion, msg) -> console.assert assertion, msg or ''
+
+class Todo
+  constructor: (data) ->
+    assert data.id
+    @title = prop data.title.trim() or ''
+    @completed = prop data.completed or false
+    @editing = prop data.editing or false
+    @id = data.id
+
+  isEmpty: => not @title()
 
 module.exports = class Todos
   list: []
