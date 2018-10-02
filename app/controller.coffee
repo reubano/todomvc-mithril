@@ -1,12 +1,11 @@
 prop = require 'mithril/stream'
-Todo = require 'models/model'
-Todos = require 'models/collection'
+Model = require 'model'
 
 module.exports = class Controller
   constructor: (attrs) ->
     @status = prop attrs.status
     @title = prop ''
-    @todos = new Todos()
+    @todos = new Model.Todos()
 
   update: (attrs) => @status attrs.status
 
@@ -19,7 +18,7 @@ module.exports = class Controller
 
   add: =>
     unless @isEmpty()
-      todo = new Todo @data()
+      todo = new Model.Todo @data()
       @todos.list.push todo
       @todos.save()
       @clearTitle()
