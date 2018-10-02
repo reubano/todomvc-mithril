@@ -4,10 +4,10 @@ watchInput = (onenter, onescape) ->
   (e) ->
     switch e.key
       when 'Enter'
-        onenter()
+        onenter?()
         e.redraw = true
       when 'Escape'
-        onescape()
+        onescape?()
         e.redraw = true
       else
         e.redraw = false
@@ -63,7 +63,7 @@ module.exports =
 
     m 'footer.footer', [
       m 'span.todo-count', [m('strong', ctrl.remaining()), " item#{es} left"]
-      m 'ul.filters',
+      m 'ul.filters', [
         ['all', 'active', 'completed'].map (status) ->
           m 'li',
             m 'a', {
@@ -72,6 +72,16 @@ module.exports =
               onupdate: m.route.link
               class: if ctrl.status() is status then 'selected' else ''
             }, status
+
+        m 'li', '🔍'
+
+        m 'input', {
+          placeholder: 'Search'
+          value: ctrl.filterValue()
+          onkeyup: watchInput null, ctrl.clearFilter
+          oninput: m.withAttr 'value', ctrl.filterValue
+        }
+      ]
 
       if ctrl.completed()
         m 'button.clear-completed', {onclick: ctrl.clearCompleted},
