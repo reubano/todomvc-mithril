@@ -5,7 +5,7 @@ uniqueId = ->
   count += 1
   count
 
-module.exports = class Todo
+class Todo
   constructor: (title) ->
     @title = prop title.trim()
     @completed = prop false
@@ -13,3 +13,10 @@ module.exports = class Todo
     @id = uniqueId()
 
   isEmpty: => not @title()
+
+module.exports =
+  Todo: Todo
+  Todos: class Todos
+    constructor: (titles) ->
+      titles = titles or []
+      @list = titles.map (title) -> new Todo title
