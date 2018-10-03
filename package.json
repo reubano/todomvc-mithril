@@ -20,6 +20,9 @@
   "scripts": {
     "start": "brunch watch --server",
     "build": "brunch build --production",
+    "compile": "coffee --compile --bare --output js/ app/",
+    "prettify": "prettier --write 'js/**/*.js'",
+    "transpile": "npm run compile && npm run prettify",
     "postinstall": "brunch build"
   },
   "dependencies": {
@@ -33,6 +36,7 @@
     "clean-css-brunch": "^2.0.0",
     "coffee-script-brunch": "^2.10.2",
     "coffeelint-brunch": "^2.0.0",
+    "prettier": "^1.14.2",
     "css-brunch": "^2.6.1",
     "uglify-js-brunch": "^2.0.0"
   }
