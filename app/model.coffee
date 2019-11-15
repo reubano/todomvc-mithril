@@ -1,4 +1,5 @@
 prop = require 'mithril/stream'
+helpers = require 'helpers'
 count = 0
 
 uniqueId = ->
