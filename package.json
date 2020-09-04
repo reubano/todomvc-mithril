@@ -4,9 +4,9 @@
   "author": "Reuben Cummings",
   "version": "1.0.0",
   "keywords": [
-    "freelancers",
-    "developers",
-    "designers"
+    "todomvc",
+    "coffeescript",
+    "brunch"
   ],
   "repository": {
     "type": "git",
