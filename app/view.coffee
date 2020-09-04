@@ -80,6 +80,7 @@ module.exports =
           value: ctrl.filterValue()
           onkeyup: watchInput null, ctrl.clearFilter
           oninput: m.withAttr 'value', ctrl.filterValue
+          style: 'border: none;'
         }
       ]
 
