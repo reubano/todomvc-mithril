@@ -1,9 +1,8 @@
 m = require 'mithril'
-App = require 'application'
+Application = require 'application'
 routes = require 'routes'
 
-m.route.mode = 'hash'
+m.route.prefix = ''
 
-document.addEventListener 'DOMContentLoaded', ->
-  location = document.getElementById('todoapp')
-  m.route location, '/', routes(App)
+location = document.getElementById 'todoapp'
+m.route location, '/', routes Application

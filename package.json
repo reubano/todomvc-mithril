@@ -14,30 +14,32 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "8.11.3",
-    "npm": "6.4.x"
+    "node": "12.16.1",
+    "npm": "6.14.x"
   },
   "scripts": {
+    "watch": "brunch watch",
     "start": "brunch watch --server",
-    "build": "brunch build --production",
     "compile": "coffee --compile --bare --output js/ app/",
-    "prettify": "prettier --write 'js/**/*.js'",
+    "prettify": "prettier --write 'js/**/*.js' && prettier --write 'brunch-config.js'",
     "transpile": "npm run compile && npm run prettify",
-    "postinstall": "brunch build"
+    "build": "brunch build || exit 1",
+    "build:prod": "brunch build --production || exit 1",
+    "postinstall": "npm run build"
   },
   "dependencies": {
-    "brunch": "^2.10.17",
+    "brunch": "^3.0.0",
     "coffeescript": "^2.3.2",
-    "mithril": "^1.1.6",
+    "mithril": "^2.0.4",
     "todomvc-app-css": "^2.1.2"
   },
   "devDependencies": {
-    "auto-reload-brunch": "^2.0.0",
-    "clean-css-brunch": "^2.0.0",
-    "coffee-script-brunch": "^2.10.2",
-    "coffeelint-brunch": "^2.0.0",
-    "prettier": "^1.14.2",
-    "css-brunch": "^2.6.1",
-    "uglify-js-brunch": "^2.0.0"
+    "auto-reload-brunch": "^2.7.1",
+    "clean-css-brunch": "^3.0.0",
+    "coffee-script-brunch": "^4.0.0",
+    "coffeelint": "^2.1.0",
+    "coffeelint-brunch": "^2.10.0",
+    "prettier": "^1.19.1",
+    "terser-brunch": "^4.0.0"
   }
 }

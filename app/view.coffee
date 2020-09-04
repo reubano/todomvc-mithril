@@ -1,4 +1,5 @@
 m = require 'mithril'
+Link = m.route.Link
 
 watchInput = (onenter, onescape) ->
   (e) ->
@@ -12,6 +13,10 @@ watchInput = (onenter, onescape) ->
       else
         e.redraw = false
 
+withAttr = (callback, attr) ->
+  attr = attr or 'value'
+  (event) -> callback event.target[attr]
+
 module.exports =
   headerView: (vnode) ->
     ctrl = vnode.state.ctrl
@@ -22,7 +27,7 @@ module.exports =
         placeholder: 'What needs to be done?'
         value: ctrl.title()
         onkeyup: watchInput ctrl.add, ctrl.clearTitle
-        oninput: m.withAttr 'value', ctrl.title
+        oninput: withAttr ctrl.title
       }
     ]
 
@@ -39,7 +44,7 @@ module.exports =
         m 'li', {class: "#{completed}#{editing}", key: todo.id}, [
           m '.view', [
             m 'input.toggle[type=checkbox]',
-              onclick: m.withAttr 'checked', -> ctrl.toggle todo
+              onclick: withAttr(-> ctrl.toggle todo, 'checked')
               checked: todo.completed()
 
             m 'label', {
@@ -52,7 +57,7 @@ module.exports =
             value: todo.title()
             onkeyup: watchInput save, reset
             onblur: save
-            oninput: m.withAttr 'value', todo.title
+            oninput: withAttr todo.title
             onupdate: (vnode) -> ctrl.focus vnode, todo
         ]
     ]
@@ -65,13 +70,11 @@ module.exports =
       m 'span.todo-count', [m('strong', ctrl.remaining()), " item#{es} left"]
       m 'ul.filters', [
         ['all', 'active', 'completed'].map (status) ->
+          linkClass = if ctrl.status() is status then 'selected' else ''
+
           m 'li',
-            m 'a', {
-              href: "/#{status}"
-              oncreate: m.route.link
-              onupdate: m.route.link
-              class: if ctrl.status() is status then 'selected' else ''
-            }, status
+            m Link, {selector: "a.#{linkClass}", href: "/#{status}"},
+              status
 
         m 'li', '🔍'
 
@@ -79,7 +82,7 @@ module.exports =
           placeholder: 'Search'
           value: ctrl.filterValue()
           onkeyup: watchInput null, ctrl.clearFilter
-          oninput: m.withAttr 'value', ctrl.filterValue
+          oninput: withAttr ctrl.filterValue
           style: 'border: none;'
         }
       ]
