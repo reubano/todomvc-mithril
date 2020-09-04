@@ -1,4 +1,4 @@
-prop = require 'mithril/stream'
+stream = require 'mithril/stream'
 count = 0
 
 uniqueId = ->
@@ -7,9 +7,9 @@ uniqueId = ->
 
 class Todo
   constructor: (title) ->
-    @title = prop title.trim()
-    @completed = prop false
-    @editing = prop false
+    @title = stream title.trim()
+    @completed = stream false
+    @editing = stream false
     @id = uniqueId()
 
   isEmpty: => not @title()

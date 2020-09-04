@@ -1,11 +1,11 @@
-prop = require 'mithril/stream'
+stream = require 'mithril/stream'
 Model = require 'model'
 
 module.exports = class Controller
   constructor: (attrs) ->
-    @status = prop attrs.status
-    @title = prop ''
-    @filterValue = prop ''
+    @status = stream attrs.status
+    @title = stream ''
+    @filterValue = stream ''
     @todos = new Model.Todos ['pizza', 'sausage']
 
   update: (attrs) => @status attrs.status
